@@ -1,6 +1,7 @@
 import { Command, flags } from '@oclif/command';
 import chalk from 'chalk';
 import * as inquirer from 'inquirer';
+import * as ora from 'ora';
 
 class CreatePardjsModule extends Command {
   static description = '🔦 Create pardjs module CLI scaffold';
@@ -20,7 +21,13 @@ class CreatePardjsModule extends Command {
   async run() {
     const { args, flags } = this.parse(CreatePardjsModule);
     const { name } = args;
-    this.log(`>>> Creating project scaffold for ${chalk.green(`${name}`)}`);
+
+    const spinner = ora('Loading unicorns').start();
+
+    spinner.color = 'yellow';
+    spinner.text = `>> Creating project scaffold for ${chalk.green(`${name}`)}`;
+
+    spinner.succeed();
 
     const prompt: any = await inquirer.prompt([
       {
