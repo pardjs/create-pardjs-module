@@ -6,7 +6,7 @@
   "bin": {
     "create-pardjs-module": "./bin/run"
   },
-  "bugs": "https://github.com/dozto/create-pardjs-module/issues",
+  "bugs": "https://github.com/pardjs/create-pardjs-module/issues",
   "dependencies": {
     "@oclif/command": "^1",
     "@oclif/config": "^1",
@@ -18,6 +18,7 @@
     "@types/node": "^10",
     "ts-node": "^8",
     "tslint": "^5",
+    "tslint-config-prettier": "^1.18.0",
     "typescript": "^3.3"
   },
   "engines": {
@@ -27,7 +28,7 @@
     "/bin",
     "/lib"
   ],
-  "homepage": "https://github.com/dozto/create-pardjs-module",
+  "homepage": "https://github.com/pardjs/create-pardjs-module",
   "keywords": [
     "oclif"
   ],
@@ -36,7 +37,7 @@
   "oclif": {
     "bin": "create-pardjs-module"
   },
-  "repository": "dozto/create-pardjs-module",
+  "repository": "pardjs/create-pardjs-module",
   "scripts": {
     "posttest": "tslint -p . -t stylish",
     "prepack": "rm -rf lib && tsc -b",
