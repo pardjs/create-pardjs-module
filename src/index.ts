@@ -1,4 +1,6 @@
 import { Command, flags } from '@oclif/command';
+import chalk from 'chalk';
+import * as inquirer from 'inquirer';
 
 class CreatePardjsModule extends Command {
   static description = '🔦 Create pardjs module CLI scaffold';
@@ -13,16 +15,23 @@ class CreatePardjsModule extends Command {
     force: flags.boolean({ char: 'f' })
   };
 
-  static args = [{ name: 'file' }];
+  static args = [{ name: 'name' }];
 
   async run() {
     const { args, flags } = this.parse(CreatePardjsModule);
+    const { name } = args;
+    this.log(`>>> Creating project scaffold for ${chalk.green(`${name}`)}`);
 
-    const name = flags.name || 'world';
-    this.log(`hello ${name} from ./src/index.ts`);
-    if (args.file && flags.force) {
-      this.log(`you input --force and --file: ${args.file}`);
-    }
+    const prompt: any = await inquirer.prompt([
+      {
+        type: 'input',
+        message: 'Repo Name(@pardjs):',
+        default: name,
+        name: 'name'
+      }
+    ]);
+
+    // this.log('>>> prompt', prompt);
   }
 }
 
