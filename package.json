@@ -1,5 +1,5 @@
 {
-  "name": "create-pardjs-module",
+  "name": "@pardjs/create-pardjs-module",
   "description": "The cli fool for create pardjs module scaffold",
   "version": "0.0.0",
   "author": "Oliver.W @ole3021",
@@ -50,6 +50,8 @@
   "scripts": {
     "posttest": "tslint -p . -t stylish",
     "prepack": "rm -rf lib && tsc -b",
+    "release": "np",
+    "prerelease": "npm run prepack",
     "test": "echo NO TESTS"
   },
   "types": "lib/index.d.ts"
