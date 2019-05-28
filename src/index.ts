@@ -3,7 +3,9 @@ import chalk from 'chalk';
 import * as inquirer from 'inquirer';
 import * as ora from 'ora';
 
+import { CustomizedInfo, PackageInfo } from './types';
 import {
+  buildReadmeInfo,
   checkFolderExist,
   checkIsGitRepo,
   checkYarnExist,
@@ -32,8 +34,11 @@ class CreatePardjsModule extends Command {
     const targetPath = resolvePath('../', name);
 
     await ensureTargetFolderSafeToWrite(targetPath);
+    const packageInfo: PackageInfo = await collectPackageInfo();
+    const customizedInfo: CustomizedInfo = buildPackageInfo(name, packageInfo);
     initProjectFolder(targetPath);
-    updateDoztoPackageInfo(targetPath, buildPackageInfo(name));
+    updatePardjsPackageInfo(targetPath, customizedInfo);
+    updatePardjsReadmeInfo(targetPath, customizedInfo);
     await installPackages(targetPath);
     initGitRepo(targetPath);
     showCompleteInfo(name, targetPath);
@@ -64,8 +69,35 @@ const ensureTargetFolderSafeToWrite = async (
   }
 };
 
-const buildPackageInfo = (projectName: string): object => ({
-  name: projectName
+const collectPackageInfo = async (): Promise<PackageInfo> => {
+  const packageInfo: PackageInfo = await inquirer.prompt([
+    {
+      type: 'input',
+      message: `What's the description for the module?`,
+      name: 'description'
+    },
+    {
+      type: 'input',
+      message: `What's the author of this module?`,
+      default: `Dozto <do021service@gmail.com>`,
+      name: 'author'
+    }
+  ]);
+
+  return packageInfo;
+};
+
+const buildPackageInfo = (
+  projectName: string,
+  packageInfo: PackageInfo
+): CustomizedInfo => ({
+  name: `@pardjs/${projectName}`,
+  description: packageInfo.description,
+  author: packageInfo.author,
+  repository: {
+    type: 'git',
+    url: `https://github.com/pardjs/${projectName}.git`
+  }
 });
 
 const initProjectFolder = (targetPath: string): void => {
@@ -84,14 +116,29 @@ const initProjectFolder = (targetPath: string): void => {
   return;
 };
 
-const updateDoztoPackageInfo = (
+const updatePardjsPackageInfo = (
   targetPath: string,
-  updateInfo: object
+  updateInfo: CustomizedInfo
 ): void => {
   const spinner = ora('Update package.json info').start();
 
   try {
     updatePackageInfo(targetPath, updateInfo);
+    spinner.succeed();
+  } catch {
+    spinner.warn('Failed to update package.json info, continued.');
+    return;
+  }
+};
+
+const updatePardjsReadmeInfo = (
+  targetPath: string,
+  updateInfo: CustomizedInfo
+): void => {
+  const spinner = ora('Init project README.md info').start();
+
+  try {
+    buildReadmeInfo(targetPath, updateInfo);
     spinner.succeed();
   } catch {
     spinner.warn('Failed to update package.json info, continued.');

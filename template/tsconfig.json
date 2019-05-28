@@ -1,0 +1,22 @@
+{
+  "compilerOptions": {
+    "alwaysStrict": true,
+    "declaration": true,
+    "declarationMap": true,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "esModuleInterop": true,
+    "importHelpers": true,
+    "lib": ["es2015", "es2016", "es2017", "dom"],
+    "module": "commonjs",
+    "noImplicitAny": true,
+    "outDir": "dist",
+    "rootDir": "src",
+    "strict": true,
+    "strictNullChecks": true,
+    "sourceMap": true,
+    "target": "es6",
+    "composite": true
+  },
+  "include": ["src/**/*"]
+}
