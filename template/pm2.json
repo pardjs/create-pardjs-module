@@ -1,0 +1,12 @@
+{
+  "name": "dsh-backend",
+  "script": "dist/main.js",
+  "instances": "max",
+  "env": {
+    "NODE_ENV": "development",
+    "TYPEORM_ENTITIES": "dist/**/*.entity.js"
+  },
+  "env_production": {
+    "NODE_ENV": "production"
+  }
+}

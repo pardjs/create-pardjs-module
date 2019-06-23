@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "description": "The description for the module",
   "keywords": [],
-  "main": "dist/src/index.js",
+  "main": "dist/index.js",
   "files": [
     "dist"
   ],
@@ -17,9 +17,24 @@
     "node": ">=8.0.0"
   },
   "dependencies": {
-    "axios": "^0.18.0"
+    "@nestjs/common": "^6.3.2",
+    "@nestjs/core": "^6.3.2",
+    "@nestjs/microservices": "^6.3.2",
+    "@nestjs/platform-express": "^6.3.2",
+    "@nestjs/typeorm": "^6.1.2",
+    "@nestjs/websockets": "^6.3.2",
+    "@pardjs/common": "^1.1.2",
+    "@types/supertest": "^2.0.7",
+    "axios": "^0.18.0",
+    "passport": "^0.4.0",
+    "reflect-metadata": "^0.1.13",
+    "rxjs": "^6.5.2",
+    "typeorm": "^0.2.18"
   },
   "scripts": {
+    "start": "ts-node -r tsconfig-paths/register src/main.ts",
+    "start:dev": "concurrently --handle-input \"wait-on dist/main.js && nodemon\" \"tsc -w\" ",
+    "start:debug": "nodemon --config nodemon-debug.json",
     "lint": "tslint  --project tsconfig.json -t codeFrame 'src/**/*.ts' 'test/**/*.ts'",
     "prebuild": "rimraf dist",
     "build": "tsc",
@@ -35,10 +50,12 @@
   "devDependencies": {
     "@commitlint/cli": "^7.6.1",
     "@commitlint/config-conventional": "^7.6.0",
+    "@nestjs/testing": "^6.3.2",
     "@types/jest": "^24.0.13",
     "@types/nock": "^10.0.3",
     "@types/node": "^12.0.2",
     "commitizen": "^3.1.1",
+    "concurrently": "^4.1.0",
     "coveralls": "^3.0.3",
     "cross-env": "^5.2.0",
     "cz-conventional-changelog": "^2.1.0",
@@ -51,6 +68,7 @@
     "np": "^5.0.2",
     "prettier": "^1.17.1",
     "rimraf": "^2.6.3",
+    "supertest": "^4.0.2",
     "ts-jest": "^24.0.2",
     "ts-node": "^8.1.0",
     "tslint": "^5.16.0",
@@ -76,7 +94,7 @@
       ".(ts|tsx)": "ts-jest"
     },
     "testEnvironment": "node",
-    "testRegex": "(/__tests__/.*|\\.(test|spec))\\.(ts|tsx|js)$",
+    "testRegex": "(/__tests__/.*|\\.(test|spec|e2e))\\.(ts|tsx|js)$",
     "moduleFileExtensions": [
       "ts",
       "tsx",
@@ -95,7 +113,7 @@
       }
     },
     "collectCoverageFrom": [
-      "src/*.{js,ts}"
+      "src/*.{controller,service,module}.{js,ts}"
     ]
   },
   "prettier": {

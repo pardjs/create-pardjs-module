@@ -16,7 +16,10 @@
     "strictNullChecks": true,
     "sourceMap": true,
     "target": "es6",
-    "composite": true
+    "composite": true,
+    "skipLibCheck": true,
+    "incremental": true
   },
-  "include": ["src/**/*"]
+  "include": ["src/**/*"],
+  "exclude": ["dist", "node_modules"]
 }

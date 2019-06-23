@@ -1,0 +1,11 @@
+kind: pipeline
+name: default
+
+steps:
+- name: test
+  image: node:10
+  commands:
+  - npm install yarn -g
+  - yarn run test
+  - ls -al
+  - pwd
