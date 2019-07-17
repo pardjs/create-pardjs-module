@@ -1,23 +1,33 @@
 {
-  "name": "create-pardjs-module",
+  "name": "@pardjs/create-pardjs-module",
   "description": "The cli fool for create pardjs module scaffold",
   "version": "0.0.0",
   "author": "Oliver.W @ole3021",
   "bin": {
     "create-pardjs-module": "./bin/run"
   },
-  "bugs": "https://github.com/dozto/create-pardjs-module/issues",
+  "bugs": "https://github.com/pardjs/create-pardjs-module/issues",
   "dependencies": {
     "@oclif/command": "^1",
     "@oclif/config": "^1",
     "@oclif/plugin-help": "^2",
+    "chalk": "^2.4.2",
+    "cross-spawn": "^6.0.5",
+    "fs-extra": "^8.0.1",
+    "inquirer": "^6.3.1",
+    "ora": "^3.4.0",
     "tslib": "^1"
   },
   "devDependencies": {
     "@oclif/tslint": "^3",
+    "@types/cross-spawn": "^6.0.0",
+    "@types/fs-extra": "^7.0.0",
+    "@types/inquirer": "^6.0.1",
     "@types/node": "^10",
+    "@types/ora": "^3.2.0",
     "ts-node": "^8",
     "tslint": "^5",
+    "tslint-config-prettier": "^1.18.0",
     "typescript": "^3.3"
   },
   "engines": {
@@ -27,7 +37,7 @@
     "/bin",
     "/lib"
   ],
-  "homepage": "https://github.com/dozto/create-pardjs-module",
+  "homepage": "https://github.com/pardjs/create-pardjs-module",
   "keywords": [
     "oclif"
   ],
@@ -36,10 +46,12 @@
   "oclif": {
     "bin": "create-pardjs-module"
   },
-  "repository": "dozto/create-pardjs-module",
+  "repository": "pardjs/create-pardjs-module",
   "scripts": {
     "posttest": "tslint -p . -t stylish",
     "prepack": "rm -rf lib && tsc -b",
+    "release": "np",
+    "prerelease": "npm run prepack",
     "test": "echo NO TESTS"
   },
   "types": "lib/index.d.ts"
