@@ -1,7 +1,7 @@
 {
-  "name": "@pardjs/create-pardjs-module",
+  "name": "create-pardjs-module",
   "description": "The cli fool for create pardjs module scaffold",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "author": "Oliver.W @ole3021",
   "bin": {
     "create-pardjs-module": "./bin/run"
@@ -25,6 +25,8 @@
     "@types/inquirer": "^6.0.1",
     "@types/node": "^10",
     "@types/ora": "^3.2.0",
+    "git-cz": "^3.2.1",
+    "np": "^5.0.3",
     "ts-node": "^8",
     "tslint": "^5",
     "tslint-config-prettier": "^1.18.0",
@@ -49,9 +51,11 @@
   "repository": "pardjs/create-pardjs-module",
   "scripts": {
     "posttest": "tslint -p . -t stylish",
-    "prepack": "rm -rf lib && tsc -b",
+    "prebuild": "rimraf dist",
+    "build": "tsc -b",
+    "commit": "git-cz",
     "release": "np",
-    "prerelease": "npm run prepack",
+    "prerelease": "npm run build",
     "test": "echo NO TESTS"
   },
   "types": "lib/index.d.ts"
