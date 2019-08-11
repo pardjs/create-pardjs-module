@@ -4,7 +4,7 @@ import * as inquirer from 'inquirer';
 import { Clone } from 'nodegit';
 import * as ora from 'ora';
 
-import * as CONFIG from '../config.json';
+import * as CONFIG from './config.json';
 
 import { CustomizedInfo, PackageInfo } from './types';
 import {
