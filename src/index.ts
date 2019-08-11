@@ -1,7 +1,10 @@
 import { Command, flags } from '@oclif/command';
 import chalk from 'chalk';
 import * as inquirer from 'inquirer';
+import { Clone } from 'nodegit';
 import * as ora from 'ora';
+
+import * as CONFIG from '../config.json';
 
 import { CustomizedInfo, PackageInfo } from './types';
 import {
@@ -13,7 +16,6 @@ import {
   createGitRepo,
   installPackagesByYarn,
   resolvePath,
-  syncFolder,
   updatePackageInfo
 } from './utils';
 
@@ -31,12 +33,12 @@ class CreatePardjsModule extends Command {
   async run() {
     const { args } = this.parse(CreatePardjsModule);
     const { name } = args;
-    const targetPath = resolvePath('../', name);
+    const targetPath = resolvePath('./', name);
 
     await ensureTargetFolderSafeToWrite(targetPath);
     const packageInfo: PackageInfo = await collectPackageInfo();
     const customizedInfo: CustomizedInfo = buildPackageInfo(name, packageInfo);
-    initProjectFolder(targetPath);
+    await initProjectFolder(targetPath);
     updatePardjsPackageInfo(targetPath, customizedInfo);
     updatePardjsReadmeInfo(targetPath, customizedInfo);
     await installPackages(targetPath);
@@ -100,12 +102,13 @@ const buildPackageInfo = (
   }
 });
 
-const initProjectFolder = (targetPath: string): void => {
-  const templatePath = resolvePath('./template');
+const initProjectFolder = async (targetPath: string): Promise<void> => {
+  // const templatePath = './template';
   const spinner = ora('Initialize pardjs module template').start();
 
   try {
-    syncFolder(resolvePath(templatePath), targetPath);
+    // syncFolder(resolvePath(templatePath), targetPath);
+    await Clone.clone(CONFIG.template, targetPath);
     spinner.succeed();
   } catch (error) {
     spinner.fail();
@@ -168,20 +171,20 @@ const installPackages = async (targetPath: string): Promise<void> => {
 };
 
 const initGitRepo = (targetPath: string): void => {
-  const spinner = ora('Install git repo').start();
-
+  let spinner = null;
   try {
     const isGitRepo = checkIsGitRepo(targetPath);
 
     if (isGitRepo) {
-      spinner.warn('Is a git repo already. ignored.');
       return;
     } else {
+      spinner = ora('Install git repo').start();
+
       createGitRepo(targetPath);
       spinner.succeed();
     }
   } catch (error) {
-    spinner.fail();
+    if (spinner) spinner.fail();
     console.error(error);
     process.exit(1);
   }
