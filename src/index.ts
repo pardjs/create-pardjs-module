@@ -92,7 +92,9 @@ const buildPackageInfo = (
   projectName: string,
   packageInfo: PackageInfo
 ): CustomizedInfo => ({
-  name: `@pardjs/${projectName}`,
+  name: CONFIG.organization
+    ? `@${CONFIG.organization}/${projectName}`
+    : `${projectName}`,
   description: packageInfo.description,
   author: packageInfo.author,
   repository: {

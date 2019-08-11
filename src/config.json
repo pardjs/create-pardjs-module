@@ -1,3 +1,4 @@
 {
-  "template": "https://github.com/pardjs/template-pardjs-module.git"
+  "template": "https://github.com/pardjs/template-pardjs-module.git",
+  "organization": "pardjs"
 }
