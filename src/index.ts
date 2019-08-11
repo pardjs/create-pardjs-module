@@ -101,7 +101,7 @@ const buildPackageInfo = (
 });
 
 const initProjectFolder = (targetPath: string): void => {
-  const templatePath = './template';
+  const templatePath = resolvePath('./template');
   const spinner = ora('Initialize pardjs module template').start();
 
   try {
