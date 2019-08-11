@@ -1,7 +1,7 @@
 {
   "name": "create-pardjs-module",
   "description": "The cli fool for create pardjs module scaffold",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "author": "Oliver.W @ole3021",
   "bin": {
     "create-pardjs-module": "./bin/run"
